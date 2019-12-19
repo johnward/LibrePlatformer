@@ -1,0 +1,39 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Hello LGLighting",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-Wall",
+                "main.cpp",
+                "glad.c",
+                "stb_image_impl.cpp",
+                "msgbox_SGL.cpp",
+                "SimpleGL.cpp",
+                "msgbox_SGL.h",
+                "SimpleGL.h",
+                "-I/usr/local/include",
+                "-I/usr/include",
+                "-I/usr/include/SDL2",
+                "-I/usr/include/freetype2",
+                "-lGL",
+                "-lGLU",
+                "-lglfw",
+                "-ldl",
+                "-lftgl",
+                "-lSOIL",
+                "-lSDL2",
+                "-lSDL2main"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
