@@ -34,8 +34,8 @@
 // Main loop statement
 bool run;
 
-// Handles for images of mario in two states
-//int mario_standing;
+// Handles for images of person in two states
+//int person;
 int sonic_walk1;
 int sonic_walk2;
 int sonic_walk3;
@@ -43,23 +43,23 @@ int sonic_walk4;
 int sonic_walk5;
 int sonic_walk6;
 
-int mario_jumping;
+int person_jumping;
 
 // Ground images
 int ground;
 int ground2;
 
-// Variable for storing marios state
-float mario_pos;
-int mario_image_pos;
-float mario_height;
-float mario_rotation;
-int mario_rotation_dir;
-bool mario_going_left;
-bool mario_going_right;
+// Variable for storing persons state
+float person_pos;
+int person_image_pos;
+float person_height;
+float person_rotation;
+int person_rotation_dir;
+bool person_going_left;
+bool person_going_right;
 
 // Constants for tweaking jumping animation
-const int mario_horizontal_speed = 5;
+const int person_horizontal_speed = 5;
 const int jump_period = 3000;
 const int standing_time = 1000;
 const int ground_clamping = 10;
@@ -69,20 +69,20 @@ const int sleep_time = 16;
 void myKeyboardCallback(KeyboardKey key, InputAction action)
 {
 	if (key == Key_Space && action == Pressed)
-		if (mario_height == 0)
-			mario_rotation_dir *= -1;
+		if (person_height == 0)
+			person_rotation_dir *= -1;
 
-	if (key == Key_Left && action == Pressed && mario_going_right == false)
-		mario_going_left = true;
+	if (key == Key_Left && action == Pressed && person_going_right == false)
+		person_going_left = true;
 
 	if (key == Key_Left && action == Released)
-		mario_going_left = false;
+		person_going_left = false;
 
-	if (key == Key_Right && action == Pressed && mario_going_left == false)
-		mario_going_right = true;
+	if (key == Key_Right && action == Pressed && person_going_left == false)
+		person_going_right = true;
 
 	if (key == Key_Right && action == Released)
-		mario_going_right = false;
+		person_going_right = false;
 }
 
 // Function called every time mouse button was pressed
@@ -105,14 +105,14 @@ void init()
 	initGL(640, 480);
 
 	// Setting window tittle
-	setWindowTittle("SimpleGL - Mario Example");
+	setWindowTittle("Libra Sonic Example");
 
 	// Setting color used when we clear window
 	//setClearColor(80, 128, 255);
 	setClearColor(40, 210, 80);
 	//glClearColor(20, 220, 60, 0);
 
-	// Loading two images of mario(standing and jumping) , we must catch image ID to use it later
+	// Loading two images of person(standing and jumping) , we must catch image ID to use it later
 	sonic_walk1 = loadImage("Sonic_Walk1.png");
 	sonic_walk2 = loadImage("Sonic_Walk2.png");
 	sonic_walk3 = loadImage("Sonic_Walk3.png");
@@ -120,16 +120,18 @@ void init()
 	sonic_walk5 = loadImage("Sonic_Walk5.png");
 	sonic_walk6 = loadImage("Sonic_Walk6.png");
 
-	mario_image_pos = 1;
+	person_image_pos = 1;
 
-	mario_jumping = loadImage("mario1.png");
+	person_jumping = loadImage("mario1.png");
+
+
 
 	// Loading ground images
 	ground = loadImage("ground.png");
 	ground2 = loadImage("ground2.png");
 
 	// keyColor makes every pixel in image with given color completly transparent
-	//keyColor(mario_standing, 0, 255, 255);
+	//keyColor(person_standing, 0, 255, 255);
 	keyColor(sonic_walk1, 0, 255, 255);
 	keyColor(sonic_walk2, 0, 255, 255);
 	keyColor(sonic_walk3, 0, 255, 255);
@@ -137,18 +139,18 @@ void init()
 	keyColor(sonic_walk5, 0, 255, 255);
 	keyColor(sonic_walk6, 0, 255, 255);
 
-	keyColor(mario_jumping, 0, 255, 255);
+	keyColor(person_jumping, 0, 255, 255);
 
 	// Now main loop flag can be set to True
 	run = true;
 
-	// Setting mario_height and mario_rotation(degrees) to zero at start and other state variables
-	mario_height   = 0.0f;
-	mario_rotation = 0.0f;
-	mario_pos = 320.0f;
-	mario_rotation_dir = 1;
-	mario_going_left = false;
-	mario_going_right = false;
+	// Setting person_height and person_rotation(degrees) to zero at start and other state variables
+	person_height   = 0.0f;
+	person_rotation = 0.0f;
+	person_pos = 320.0f;
+	person_rotation_dir = 1;
+	person_going_left = false;
+	person_going_right = false;
 
 	// We must register our input callbacks if we want them work
 	setKeyboardCallback(myKeyboardCallback);
@@ -183,50 +185,50 @@ void update()
 	// Divided animation period into two states : standing and jumping
 	if (time < standing_time)
 	{
-		mario_height = 0;
-		mario_rotation = 0;
+		person_height = 0;
+		person_rotation = 0;
 	}
 	/*else
 	{
 		time = time - standing_time;
-		mario_height = 320 * sinf(time*(3.14159/ (jump_period - standing_time)));
-		mario_rotation = mario_rotation_dir * 360.0f * time / (jump_period - standing_time);
+		person_height = 320 * sinf(time*(3.14159/ (jump_period - standing_time)));
+		person_rotation = person_rotation_dir * 360.0f * time / (jump_period - standing_time);
 
-		// If mario is near ground height is clamped to zero to prevent jittering
-		if (mario_height < ground_clamping)		
+		// If person is near ground height is clamped to zero to prevent jittering
+		if (person_height < ground_clamping)		
 		{
-			mario_height = 0;
-			mario_rotation = 0;
+			person_height = 0;
+			person_rotation = 0;
 		}
 	}*/
 
-	if (mario_going_left)
-		if (mario_pos > 120)
+	if (person_going_left)
+		if (person_pos > 120)
 		{
-			mario_pos -= mario_horizontal_speed;
+			person_pos -= person_horizontal_speed;
 
-			if (mario_image_pos == 1)
+			if (person_image_pos == 1)
 			{
-				mario_image_pos = 5;
+				person_image_pos = 5;
 			}
 			else
 			{
-				mario_image_pos -= 1;
+				person_image_pos -= 1;
 			}
 		}
 
-	if (mario_going_right)
-		if (mario_pos < 520)
+	if (person_going_right)
+		if (person_pos < 520)
 		{
-			mario_pos += mario_horizontal_speed;
+			person_pos += person_horizontal_speed;
 
-			if (mario_image_pos == 5)
+			if (person_image_pos == 5)
 			{
-				mario_image_pos = 1;
+				person_image_pos = 1;
 			}
 			else
 			{
-				mario_image_pos += 1;
+				person_image_pos += 1;
 			}
 			
 		}
@@ -237,23 +239,27 @@ void update()
 // This function is drawing everything and swaping buffers if there is double buffering
 void draw()
 {
-	// If mario is on ground draw standing mario image
-	if( mario_height == 0)
+	// If person is on ground draw standing person image
+	if( person_height == 0)
 	{
 		
-		drawImageCentered(mario_image_pos, mario_pos, 85, 48, 64, mario_rotation);
+		drawImageCentered(person_image_pos, person_pos, 85, 48, 64, person_rotation);
 	}
-	// If mario is in air draw jumping mario image with some rotation
+	// If person is in air draw jumping person image with some rotation
 	else
 	{
-		drawImageCentered(mario_jumping, mario_pos, mario_height + 96 , 64, 48, mario_rotation);
+		drawImageCentered(person_jumping, person_pos, person_height + 96 , 64, 48, person_rotation);
 	}
-	// Drawing ground under mario
+	// Drawing ground under person
 	for(int i=0;i<20;i++)
-	drawImage(ground, i * 32, 32, 32, 32);
+	{
+		drawImage(ground, i * 32, 32, 32, 32);
+	}
 
 	for (int i = 0; i<20; i++)
-	drawImage(ground2, i * 32, 0, 32, 32);
+	{
+		drawImage(ground2, i * 32, 0, 32, 32);
+	}
 
 	// Draw simple text
 	text(100, 440, "Sonic the Hedgehog");
