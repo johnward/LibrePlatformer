@@ -1,5 +1,5 @@
 
-# LibreSonic
+# Libre Platformer
 
 This is an example 2d game with a moving character, I have borrowed the character Sonic for this demo.
 
