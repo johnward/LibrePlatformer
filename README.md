@@ -10,4 +10,4 @@ Use the arrow keys to move left and right.
 ## Here is a screen shot of the scene:
 ![alt text][logo]
 
-[logo]: Sonic.png "Libre Sonic 2d Game - Initial Scene"
+[logo]: Screenshot.png "Libre Sonic 2d Game - Initial Scene"
